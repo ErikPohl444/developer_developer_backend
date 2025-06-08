@@ -13,6 +13,24 @@ class Skill(BaseModel):
     skill_id: int
     name: str
 
+class Goal(BaseModel):
+    goal_id: int
+    skill_id: int
+    name: str
+
+class TeamGoal(BaseModel):
+    goal_id: int
+    team_id: int
+    max_team_score_exceeds: int
+    avg_score: int
+    due_date: datetime.date
+
+class PersonGoal(BaseModel):
+    goal_id: int
+    person_id: int
+    exceeds_score: int
+    due_date: datetime.date
+
 class SkillTool(BaseModel):
     tool_id: int
     skill_id: int
@@ -102,6 +120,13 @@ def create_skill(skilltool: SkillTool):
     return {
         "message": f"Person {skilltool.name} created successfully!",
         "data": skilltool
+    }
+
+@app.post("/create-goal/")
+def create_skill(goal: Goal):
+    return {
+        "message": f"Person {goal.name} created successfully!",
+        "data": goal
     }
 
 @app.get("/")
