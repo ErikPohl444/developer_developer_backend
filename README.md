@@ -1,3 +1,6 @@
+![Growth](./treeroots.png)
+
+
 # Develop Backend
 
 Develop_backend is a FastAPI backend for the Develop tool, designed to help organizations track teams, people, their roles, and skills.
