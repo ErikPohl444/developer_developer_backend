@@ -9,6 +9,7 @@ class User(BaseModel):
     age: int
     email: str
 
+data = [User(user_id=1, name="Erik", age=52, email="iotasubscript@gmail.com")]
 class Skill(BaseModel):
     skill_id: int
     name: str
@@ -87,6 +88,7 @@ def get_db(): # stub, inspiration
 
 @app.post("/create-user/")
 def create_user(user: User):
+    data[0] = user
     return {
         "message": f"User {user.name} created successfully!",
         "data": user
@@ -94,7 +96,8 @@ def create_user(user: User):
 
 @app.get("/users/{user_id}")
 async def read_user(user_id: int, q: str = None):
-    return {"user_id": user_id, "q": q}
+    x = data[0]
+    return {"user_id": x.user_id, "user": x, "q": q}
 
 @app.post("/create-skill/")
 def create_skill(skill: Skill):
@@ -171,3 +174,4 @@ async def read_goal(goal_id: int, q: str = None):
 @app.get("/")
 async def root():
     return {"message": "Hello World!  Welcome to Develop!"}
+
