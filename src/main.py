@@ -52,6 +52,57 @@ class TeamPerson(BaseModel):
 
 app = FastAPI()
 
+def connect_to_db(): # stub, inspiration
+    pass # place holder
+def get_db(): # stub, inspiration
+    db = connect_to_db()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@app.post("/create-user/")
+def create_user(user: User):
+    return {
+        "message": f"User {user.name} created successfully!",
+        "data": user
+    }
+
+@app.post("/create-skill/")
+def create_skill(skill: Skill):
+    return {
+        "message": f"Skill {skill.name} created successfully!",
+        "data": skill
+    }
+
+@app.post("/create-role/")
+def create_skill(role: Role):
+    return {
+        "message": f"Skill {role.name} created successfully!",
+        "data": role
+    }
+
+@app.post("/create-person/")
+def create_skill(person: Role):
+    return {
+        "message": f"Person {person.name} created successfully!",
+        "data": person
+    }
+
+@app.post("/create-team/")
+def create_skill(team: Team):
+    return {
+        "message": f"Person {team.name} created successfully!",
+        "data": team
+    }
+
+@app.post("/create-skilltool/")
+def create_skill(skilltool: SkillTool):
+    return {
+        "message": f"Person {skilltool.name} created successfully!",
+        "data": skilltool
+    }
 
 @app.get("/")
 async def root():
