@@ -31,10 +31,15 @@ class PersonGoal(BaseModel):
     exceeds_score: int
     due_date: datetime.date
 
+class Tool(BaseModel):
+    tool_id: int
+    tool_name: str
+
+
 class SkillTool(BaseModel):
+    skilltool_id: int
     tool_id: int
     skill_id: int
-    tool_name: str
 
 class Role(BaseModel):
     role_id: int
@@ -87,6 +92,10 @@ def create_user(user: User):
         "data": user
     }
 
+@app.get("/users/{user_id}")
+async def read_user(user_id: int, q: str = None):
+    return {"user_id": user_id, "q": q}
+
 @app.post("/create-skill/")
 def create_skill(skill: Skill):
     return {
@@ -94,40 +103,70 @@ def create_skill(skill: Skill):
         "data": skill
     }
 
+@app.get("/skills/{skill_id}")
+async def read_skill(skill_id: int, q: str = None):
+    return {"skill_id": skill_id, "q": q}
+
+@app.get("/teams/{team_id}")
+async def read_team(team_id: int, q: str = None):
+    return {"team_id": team_id, "q": q}
+
 @app.post("/create-role/")
-def create_skill(role: Role):
+def create_role(role: Role):
     return {
-        "message": f"Skill {role.name} created successfully!",
+        "message": f"Role {role.name} created successfully!",
         "data": role
     }
 
+@app.get("/roles/{role_id}")
+async def read_role(role_id: int, q: str = None):
+    return {"role_id": role_id, "q": q}
+
 @app.post("/create-person/")
-def create_skill(person: Role):
+def create_person(person: Role):
     return {
         "message": f"Person {person.name} created successfully!",
         "data": person
     }
 
+@app.get("/people/{person_id}")
+async def read_person(person_id: int, q: str = None):
+    return {"person_id": person_id, "q": q}
+
 @app.post("/create-team/")
-def create_skill(team: Team):
+def create_team(team: Team):
     return {
-        "message": f"Person {team.name} created successfully!",
+        "message": f"Team {team.name} created successfully!",
         "data": team
     }
 
-@app.post("/create-skilltool/")
-def create_skill(skilltool: SkillTool):
+@app.get("/teams/{team_id}")
+async def read_team(team_id: int, q: str = None):
+    return {"team_id": team_id, "q": q}
+
+
+
+@app.post("/create-tool/")
+def create_tool(tool: SkillTool):
     return {
-        "message": f"Person {skilltool.name} created successfully!",
-        "data": skilltool
+        "message": f"Tool {tool.name} created successfully!",
+        "data": tool
     }
 
+@app.get("/tools/{tool_id}")
+async def read_tool(tool_id: int, q: str = None):
+    return {"tool_id": tool_id, "q": q}
+
 @app.post("/create-goal/")
-def create_skill(goal: Goal):
+def create_goal(goal: Goal):
     return {
-        "message": f"Person {goal.name} created successfully!",
+        "message": f"Goal {goal.name} created successfully!",
         "data": goal
     }
+
+@app.get("/goals/{goal_id}")
+async def read_goal(goal_id: int, q: str = None):
+    return {"goal_id": goal_id, "q": q}
 
 @app.get("/")
 async def root():
