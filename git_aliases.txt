@@ -1,0 +1,176 @@
+# courtesy https://github.com/nedbat/dot/blob/master/.config/git/config
+# just add to public git config or repo git config
+[alias]
+    # In an alias, an initial ":" command indicates what git command completion
+    # to use for the alias.
+    amend = commit --amend --no-edit
+    edit = commit --amend --only
+    br = branch
+    co = checkout
+    sw = switch
+    ci = commit --edit --verbose
+    d = diff
+    di = diff
+    s = status -s -b --show-stash
+    lhist = log --pretty=me --graph --date=short
+    lhistg = log --pretty=me --date=short -G
+    relnotes = log --pretty=relnote --date=short --no-merges
+    h = "!f() { git --no-pager log -n 20 --pretty=me --graph --date=short $@; }; f"
+    ha = "!f() { git --no-pager log -n 35 --pretty=me --graph --date=short --all; }; f"
+    tags = tag
+    #fixup = !sh -c 'git rebase -i $(git merge-base HEAD ${1:-origin/master})' -
+
+    # From rafasc in #git
+    # "the idea is that you use it with a list of refs, and the output should show only the necessary history to explain their relationship."
+    lm = "!f(){ : git log; git lhist --boundary \"${@:-HEAD}\" --not $(git merge-base --octopus $(git rev-parse \"${@:-HEAD}^@\" \"${@/%/^@}\")) --; };f"
+
+    # A list of conflicted files.
+    flict = "!f(){ git ls-files -u | awk '{print $4}' | sort -u; }; f"
+
+    # Checkout a local branch for a pull request on GitHub
+    #   $ git copr 1234             # gets and switches to pr/1234 from origin
+    #   $ git copr 789 otherguy     # gets and switches to pr/789 from otherguy remote
+    # from https://gist.github.com/gnarf/5406589
+    # discussed at http://nedbatchelder.com/blog/201407/fetching_github_pull_requests.html
+    copr = "!f() { \
+        git fetch -fu ${2:-origin} pull/$1/head:pr/$1 && \
+        git checkout pr/$1 && \
+        git reset --hard @; \
+    }; f"
+
+    # Make a pull request with hub.
+    pr = "!f() { hub pull-request "$@"; }; f"
+
+    # I'm done with this merged branch, ready to switch back to another one.
+    brdone = "!f() { \
+        : git show; \
+        local brname=\"$(git symbolic-ref --short HEAD)\" && \
+        local primary=\"$(git primary)\" && \
+        git checkout ${1:-$primary} && \
+        git pull && \
+        git branch -d $brname && \
+        git push origin --delete $brname; \
+    }; f"
+
+    # Merge a branch, and delete it here and on the origin.
+    brmerge = "!f() { \
+        : git show; \
+        git merge $1 && \
+        git branch -d $1 && \
+        git push origin --delete $1; \
+    }; f"
+
+    # Merge the branch we just switched from.
+    brmerge- = "!f() { \
+        git brmerge $(git rev-parse --abbrev-ref @{-1}); \
+    }; f"
+
+    # Delete a branch here and on the origin.
+    # The switch $1 is to get an entry in the reflog now, in case we need to recover the branch.
+    brdel = "!f() { : git show; git switch $1 && git switch - && git branch -D $1 && git push ${2:-origin} --delete $1; }; f"
+
+    # Delete the branch we just switched from.  This is for when "brdone" says it couldn't
+    # delete the branch, because it was a rebase rather than a merge. It doesn't try to
+    # delete the branch on the remote, because "@{-1}" isn't valid there.
+    brdel- = "!f() { git switch @{-1} && git switch - && git branch -D @{-1}; }; f"
+
+    brnedbat = "!f() { git branch --all --color | grep nedbat; }; f"
+
+    # Cherry-pick, conveniently
+    cp = "!f() { git cherry-pick -x $@; }; f"
+    cpstop = cherry-pick --abort
+
+    # Show the divergent history of my branch and its upstream
+    y = "!f() { git log --oneline --graph HEAD @{u} $(git merge-base HEAD @{u})^!; }; f"
+
+    # Push -f safely
+    pushf = push --force-with-lease
+    ampf = "!f() { git amend -a --allow-empty; git pushf; }; f"
+    puo = push -u origin @
+
+    # Find the name of the primary branch, either "main" or "master".
+    primary = "!f() { \
+        git branch -a | \
+        sed -n -E -e '/remotes.origin.ma(in|ster)$/s@remotes/origin/@@p'; \
+    }; f"
+
+    # Switch to main or master, whichever exists, and update it.
+    ma = "!f() { \
+        git checkout $(git primary) && \
+        git pull; \
+    }; f"
+
+    # Switch to the origin's default branch, like ma, but more accurate and slower.
+    oma = "!f() { \
+        git checkout \
+            $(\
+                git remote show origin | \
+                sed -n -E -e '/HEAD branch/s/.*: //p' \
+            ) && \
+        git pull; \
+    }; f"
+
+    # Pull the upstream main/master branch and update our fork.
+    mma = "!f() { \
+        git ma && \
+        git pull upstream $(git primary) --ff-only && \
+        git push; \
+    }; f"
+
+    fa = fetch --all --prune --tags
+    pa = "!f() { git push --all; git push --tags; }; f"
+
+    # Get a plain-text diff, for making patches.
+    patch = "!f() { git --no-pager diff --no-color $@; }; f"
+
+    # Show branches, verbosely, sorted by last touch, with commit messages.
+    brv = "!f() { \
+        local date='%(color:reset)%(creatordate:short)'; \
+        local upstream='%(color:bold)%(color:white)%(align:2,right)%(upstream:trackshort)%(end)%(color:nobold)'; \
+        local refname='%(align:40,left)%(color:yellow)%(refname:short)%(end)%(color:reset)'; \
+        local subject='%(contents:subject)'; \
+        git branch --sort=-creatordate --color=always --format=$date' '$upstream' '$refname' '$subject; \
+    }; f"
+
+    copysha = "!f() { \
+        : git show; \
+        $XDG_CONFIG_HOME/../bin/git-copysha "$@"; \
+    }; f"
+
+    # https://nedbatchelder.com/blog/202202/moving_a_git_branch_to_a_new_base.html
+    movebranch = "!f() { \
+        : git show; \
+        git rebase --onto $2 $(git merge-base $1 @); \
+    }; f"
+
+    squash = "!f() { \
+        : git show; \
+        git -c sequence.editor=: rebase -i --autosquash --autostash ${1:-@~10}; \
+    }; f"
+
+    # See the current GHA runs on this branch.
+    # https://nedbatchelder.com/blog/202303/watchgha.html
+    runs = "!f() { \
+        watch_gha_runs $@ \
+            \"$(git remote get-url origin)\" \
+            \"$(git rev-parse --abbrev-ref HEAD)\"; \
+    }; f"
+
+    # If this is a private repo, change the remote from git@github.com to github_private.
+    # You can remap github_private: to github like this:
+    #
+    #   [url "git@github.com:"]
+    #       insteadOf = github_private:
+    #
+    # This requires the gh command: https://cli.github.com/
+    #
+    fix-private-remotes = "!f() { \
+        vis=$(gh api 'repos/{owner}/{repo}' --template '{{.visibility}}'); \
+        if [[ $vis == private ]]; then \
+            for rem in $(git remote); do \
+                echo Updating remote $rem; \
+                git config remote.$rem.url $(git config remote.$rem.url | \
+                    sed -e 's/git@github.com:/github_private:/'); \
+            done \
+        fi; \
+    }; f"
