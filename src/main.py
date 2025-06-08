@@ -131,4 +131,4 @@ def create_skill(goal: Goal):
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Hello World!  Welcome to Develop!"}
