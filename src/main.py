@@ -11,7 +11,7 @@ class User(BaseModel):
     email: str
 
 
-data = [User(user_id=1, name="Erik", age=52, email="iotasubscript@gmail.com")]
+data = [User(user_id=1, name="Erik", age=52, email="erikpohl.444@gmail.com")]
 
 
 class Skill(BaseModel):
