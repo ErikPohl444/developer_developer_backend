@@ -3,21 +3,27 @@ import datetime
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+
 class User(BaseModel):
     user_id: int
     name: str
     age: int
     email: str
 
+
 data = [User(user_id=1, name="Erik", age=52, email="iotasubscript@gmail.com")]
+
+
 class Skill(BaseModel):
     skill_id: int
     name: str
+
 
 class Goal(BaseModel):
     goal_id: int
     skill_id: int
     name: str
+
 
 class TeamGoal(BaseModel):
     goal_id: int
@@ -26,11 +32,13 @@ class TeamGoal(BaseModel):
     avg_score: int
     due_date: datetime.date
 
+
 class PersonGoal(BaseModel):
     goal_id: int
     person_id: int
     exceeds_score: int
     due_date: datetime.date
+
 
 class Tool(BaseModel):
     tool_id: int
@@ -42,14 +50,17 @@ class SkillTool(BaseModel):
     tool_id: int
     skill_id: int
 
+
 class Role(BaseModel):
     role_id: int
     name: str
+
 
 class Person(BaseModel):
     person_id: int
     name: str
     role_id: int
+
 
 class PersonSkill(BaseModel):
     personskill_id: int
@@ -57,16 +68,19 @@ class PersonSkill(BaseModel):
     skill_id: int
     score: int
 
+
 class PersonSkillHistory(BaseModel):
     personskill_id: int
     date: datetime.date
     score: int
+
 
 class Team(BaseModel):
     team_id: int
     parent_team_id: int
     name: str
     manager: int
+
 
 class TeamPerson(BaseModel):
     teamperson_id: int
@@ -76,9 +90,12 @@ class TeamPerson(BaseModel):
 
 app = FastAPI()
 
-def connect_to_db(): # stub, inspiration
-    pass # place holder
-def get_db(): # stub, inspiration
+
+def connect_to_db():  # stub, inspiration
+    pass  # place holder
+
+
+def get_db():  # stub, inspiration
     db = connect_to_db()
     try:
         yield db
@@ -94,10 +111,12 @@ def create_user(user: User):
         "data": user
     }
 
+
 @app.get("/users/{user_id}")
 async def read_user(user_id: int, q: str = None):
     x = data[0]
     return {"user_id": x.user_id, "user": x, "q": q}
+
 
 @app.post("/create-skill/")
 def create_skill(skill: Skill):
@@ -106,13 +125,16 @@ def create_skill(skill: Skill):
         "data": skill
     }
 
+
 @app.get("/skills/{skill_id}")
 async def read_skill(skill_id: int, q: str = None):
     return {"skill_id": skill_id, "q": q}
 
+
 @app.get("/teams/{team_id}")
 async def read_team(team_id: int, q: str = None):
     return {"team_id": team_id, "q": q}
+
 
 @app.post("/create-role/")
 def create_role(role: Role):
@@ -121,9 +143,11 @@ def create_role(role: Role):
         "data": role
     }
 
+
 @app.get("/roles/{role_id}")
 async def read_role(role_id: int, q: str = None):
     return {"role_id": role_id, "q": q}
+
 
 @app.post("/create-person/")
 def create_person(person: Role):
@@ -132,9 +156,11 @@ def create_person(person: Role):
         "data": person
     }
 
+
 @app.get("/people/{person_id}")
 async def read_person(person_id: int, q: str = None):
     return {"person_id": person_id, "q": q}
+
 
 @app.post("/create-team/")
 def create_team(team: Team):
@@ -143,10 +169,10 @@ def create_team(team: Team):
         "data": team
     }
 
+
 @app.get("/teams/{team_id}")
 async def read_team(team_id: int, q: str = None):
     return {"team_id": team_id, "q": q}
-
 
 
 @app.post("/create-tool/")
@@ -156,9 +182,11 @@ def create_tool(tool: SkillTool):
         "data": tool
     }
 
+
 @app.get("/tools/{tool_id}")
 async def read_tool(tool_id: int, q: str = None):
     return {"tool_id": tool_id, "q": q}
+
 
 @app.post("/create-goal/")
 def create_goal(goal: Goal):
@@ -167,11 +195,12 @@ def create_goal(goal: Goal):
         "data": goal
     }
 
+
 @app.get("/goals/{goal_id}")
 async def read_goal(goal_id: int, q: str = None):
     return {"goal_id": goal_id, "q": q}
 
+
 @app.get("/")
 async def root():
     return {"message": "Hello World!  Welcome to Develop!"}
-
