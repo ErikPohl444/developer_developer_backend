@@ -1,6 +1,7 @@
 import datetime
 
 from fastapi import FastAPI
+from fastapi_versioning import VersionedFastAPI, version
 from pydantic import BaseModel
 
 
@@ -88,7 +89,7 @@ class TeamPerson(BaseModel):
     person_id: int
 
 
-app = FastAPI()
+app = FastAPI(title="Developer Developer")
 
 
 def connect_to_db():  # stub, inspiration
@@ -104,6 +105,7 @@ def get_db():  # stub, inspiration
 
 
 @app.post("/create-user/")
+@version(1, 0)
 def create_user(user: User):
     data[0] = user
     return {
@@ -113,12 +115,14 @@ def create_user(user: User):
 
 
 @app.get("/users/{user_id}")
+@version(1, 0)
 async def read_user(user_id: int, q: str = None):
     x = data[0]
     return {"user_id": x.user_id, "user": x, "q": q}
 
 
 @app.post("/create-skill/")
+@version(1, 0)
 def create_skill(skill: Skill):
     return {
         "message": f"Skill {skill.name} created successfully!",
@@ -127,16 +131,19 @@ def create_skill(skill: Skill):
 
 
 @app.get("/skills/{skill_id}")
+@version(1, 0)
 async def read_skill(skill_id: int, q: str = None):
     return {"skill_id": skill_id, "q": q}
 
 
 @app.get("/teams/{team_id}")
+@version(1, 0)
 async def read_team(team_id: int, q: str = None):
     return {"team_id": team_id, "q": q}
 
 
 @app.post("/create-role/")
+@version(1, 0)
 def create_role(role: Role):
     return {
         "message": f"Role {role.name} created successfully!",
@@ -145,11 +152,13 @@ def create_role(role: Role):
 
 
 @app.get("/roles/{role_id}")
+@version(1, 0)
 async def read_role(role_id: int, q: str = None):
     return {"role_id": role_id, "q": q}
 
 
 @app.post("/create-person/")
+@version(1, 0)
 def create_person(person: Role):
     return {
         "message": f"Person {person.name} created successfully!",
@@ -158,11 +167,13 @@ def create_person(person: Role):
 
 
 @app.get("/people/{person_id}")
+@version(1, 0)
 async def read_person(person_id: int, q: str = None):
     return {"person_id": person_id, "q": q}
 
 
 @app.post("/create-team/")
+@version(1, 0)
 def create_team(team: Team):
     return {
         "message": f"Team {team.name} created successfully!",
@@ -171,11 +182,13 @@ def create_team(team: Team):
 
 
 @app.get("/teams/{team_id}")
+@version(1, 0)
 async def read_team(team_id: int, q: str = None):
     return {"team_id": team_id, "q": q}
 
 
 @app.post("/create-tool/")
+@version(1, 0)
 def create_tool(tool: SkillTool):
     return {
         "message": f"Tool {tool.name} created successfully!",
@@ -184,11 +197,13 @@ def create_tool(tool: SkillTool):
 
 
 @app.get("/tools/{tool_id}")
+@version(1, 0)
 async def read_tool(tool_id: int, q: str = None):
     return {"tool_id": tool_id, "q": q}
 
 
 @app.post("/create-goal/")
+@version(1, 0)
 def create_goal(goal: Goal):
     return {
         "message": f"Goal {goal.name} created successfully!",
@@ -197,10 +212,14 @@ def create_goal(goal: Goal):
 
 
 @app.get("/goals/{goal_id}")
+@version(1, 0)
 async def read_goal(goal_id: int, q: str = None):
     return {"goal_id": goal_id, "q": q}
 
 
 @app.get("/")
+@version(1, 0)
 async def root():
     return {"message": "Hello World!  Welcome to Develop!"}
+
+app = VersionedFastAPI(app)
