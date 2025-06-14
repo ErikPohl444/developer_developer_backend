@@ -222,4 +222,9 @@ async def read_goal(goal_id: int, q: str = None):
 async def root():
     return {"message": "Hello World!  Welcome to Develop!"}
 
+@app.get("/health")
+@version(1, 0)
+async def health_check():
+    return {"status": "healthy"}
+
 app = VersionedFastAPI(app)
