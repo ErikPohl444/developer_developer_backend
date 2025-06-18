@@ -1,12 +1,15 @@
 import datetime
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, HTTPException
 from fastapi_versioning import VersionedFastAPI, version
 from pydantic import BaseModel
+from sqlmodel import Field, Session, SQLModel, create_engine, select
+from typing import Annotated
 
 
-class User(BaseModel):
-    user_id: int
+
+class User(SQLModel, table=True):
+    user_id: int | None = Field(default=None, primary_key=True)
     name: str
     age: int
     email: str
@@ -89,6 +92,23 @@ class TeamPerson(BaseModel):
     person_id: int
 
 
+sqlite_file_name = "./data/database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+connect_args = {"check_same_thread": False}
+engine = create_engine(sqlite_url, connect_args=connect_args)
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+def get_session():
+    with Session(engine) as session:
+        yield session
+
+SessionDep = Annotated[Session, Depends(get_session)]
+
+
+
 app = FastAPI(title="Developer Developer")
 
 
@@ -106,8 +126,11 @@ def get_db():  # stub, inspiration
 
 @app.post("/create-user/")
 @version(1, 0)
-def create_user(user: User):
+def create_user(user: User, session: SessionDep):
     data[0] = user
+    session.add(user)
+    session.commit()
+    session.refresh(user)
     return {
         "message": f"User {user.name} created successfully!",
         "data": user
@@ -116,8 +139,11 @@ def create_user(user: User):
 
 @app.get("/users/{user_id}")
 @version(1, 0)
-async def read_user(user_id: int, q: str = None):
+async def read_user(user_id: int, session: SessionDep, q: str = None):
     x = data[0]
+    user = session.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
     return {"user_id": x.user_id, "user": x, "q": q}
 
 
@@ -228,3 +254,7 @@ async def health_check():
     return {"status": "healthy"}
 
 app = VersionedFastAPI(app)
+
+@app.on_event("startup")
+def on_startup():
+    create_db_and_tables()
