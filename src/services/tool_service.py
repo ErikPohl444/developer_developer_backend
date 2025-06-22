@@ -14,5 +14,5 @@ def create_tool_service(tool: Tool, session: Session):
 def read_tool_service(tool_id: int, session: Session):
     tool = session.get(Tool, tool_id)
     if not tool:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Tool not found")
     return tool
