@@ -1,9 +1,8 @@
 import datetime
-
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi_versioning import VersionedFastAPI, version
 from pydantic import BaseModel
-from sqlmodel import Field, Session, SQLModel, create_engine, select
+from sqlmodel import Field, Session, SQLModel, create_engine
 from typing import Annotated
 
 
@@ -163,6 +162,15 @@ async def read_skill(skill_id: int, q: str = None):
     return {"skill_id": skill_id, "q": q}
 
 
+@app.post("/create-team/")
+@version(1, 0)
+def create_team(team: Team):
+    return {
+        "message": f"Team {team.name} created successfully!",
+        "data": team
+    }
+
+
 @app.get("/teams/{team_id}")
 @version(1, 0)
 async def read_team(team_id: int, q: str = None):
@@ -197,21 +205,6 @@ def create_person(person: Role):
 @version(1, 0)
 async def read_person(person_id: int, q: str = None):
     return {"person_id": person_id, "q": q}
-
-
-@app.post("/create-team/")
-@version(1, 0)
-def create_team(team: Team):
-    return {
-        "message": f"Team {team.name} created successfully!",
-        "data": team
-    }
-
-
-@app.get("/teams/{team_id}")
-@version(1, 0)
-async def read_team(team_id: int, q: str = None):
-    return {"team_id": team_id, "q": q}
 
 
 @app.post("/create-tool/")
