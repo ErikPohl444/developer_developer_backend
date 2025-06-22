@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from sqlmodel import Session
 from src.models.skill import Skill
 
-def create_goal_service(skill: Skill, session: Session):
+def create_skill_service(skill: Skill, session: Session):
     session.add(skill)
     session.commit()
     session.refresh(skill)
