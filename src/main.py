@@ -4,13 +4,8 @@ from fastapi_versioning import VersionedFastAPI, version
 from pydantic import BaseModel
 from sqlmodel import Field, Session, SQLModel, create_engine
 from typing import Annotated
-
-
-class User(SQLModel, table=True):
-    user_id: int | None = Field(default=None, primary_key=True)
-    name: str
-    age: int
-    email: str
+from src.services.user_service import create_user_service, read_user_service
+from src.models.user import User
 
 
 data = [User(user_id=1, name="Erik", age=52, email="erikpohl.444@gmail.com")]
@@ -128,23 +123,15 @@ def get_db():  # stub, inspiration
 @version(1, 0)
 def create_user(user: User, session: SessionDep):
     data[0] = user
-    session.add(user)
-    session.commit()
-    session.refresh(user)
-    return {
-        "message": f"User {user.name} created successfully!",
-        "data": user
-    }
+    return create_user_service(user, session)
 
 
 @app.get("/users/{user_id}")
 @version(1, 0)
 async def read_user(user_id: int, session: SessionDep, q: str = None):
     x = data[0]
-    user = session.get(User, user_id)
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    return {"user_id": x.user_id, "user": x, "q": q}
+    user = read_user_service(user_id, session)
+    return {"user_id": user.user_id, "user": user, "q": q}
 
 
 @app.post("/create-skill/")
