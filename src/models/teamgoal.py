@@ -1,6 +1,7 @@
 from sqlmodel import SQLModel
 import datetime
 
+
 class TeamGoal(SQLModel):
     goal_id: int
     team_id: int

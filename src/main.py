@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi_versioning import VersionedFastAPI, version
-from pydantic import BaseModel
-from sqlmodel import Field, Session, SQLModel, create_engine
+from sqlmodel import Session, SQLModel, create_engine
 from typing import Annotated
 from src.services.user_service import create_user_service, read_user_service
 from src.models.user import User
@@ -99,6 +98,81 @@ async def read_team(team_id: int, q: str = None):
     return {"team_id": team_id, "q": q}
 
 
+@app.post("/create-tool/")
+@version(1, 0)
+def create_tool(tool: Tool):
+    return {
+        "message": f"Tool {tool.name} created successfully!",
+        "data": tool
+    }
+
+
+@app.get("/tools/{tool_id}")
+@version(1, 0)
+async def read_tool(tool_id: int, q: str = None):
+    return {"tool_id": tool_id, "q": q}
+
+
+@app.post("/create-person/")
+@version(1, 0)
+def create_person(person: Person):
+    return {
+        "message": f"Person {person.name} created successfully!",
+        "data": person
+    }
+
+
+@app.get("/persons/{person_id}")
+@version(1, 0)
+async def read_person(person_id: int, q: str = None):
+    return {"person_id": person_id, "q": q}
+
+
+@app.post("/create-teamperson/")
+@version(1, 0)
+def create_teamperson(teamperson: TeamPerson):
+    return {
+        "message": f"TeamPerson {teamperson.name} created successfully!",
+        "data": teamperson
+    }
+
+
+@app.get("/reampersons/{teamperson_id}")
+@version(1, 0)
+async def read_teamperson(teamperson_id: int, q: str = None):
+    return {"teamperson_id": teamperson_id, "q": q}
+
+
+@app.post("/create-personskill/")
+@version(1, 0)
+def create_personskill(personskill: PersonSkill):
+    return {
+        "message": f"PersonSkill {personskill.name} created successfully!",
+        "data": personskill
+    }
+
+
+@app.get("/personskills/{personskill_id}")
+@version(1, 0)
+async def read_personskill(personskill_id: int, q: str = None):
+    return {"personskill_id": personskill_id, "q": q}
+
+
+@app.post("/create-personskillhistory/")
+@version(1, 0)
+def create_personskillhistory(personskillhistory: PersonSkillHistory):
+    return {
+        "message": f"PersonSkill {personskillhistory.name} created successfully!",
+        "data": personskillhistory
+    }
+
+
+@app.get("/personskillhistories/{personskillhistory_id}")
+@version(1, 0)
+async def read_personskillhistories(personskillhistory_id: int, q: str = None):
+    return {"personskillhistory_id": personskillhistory_id, "q": q}
+
+
 @app.post("/create-role/")
 @version(1, 0)
 def create_role(role: Role):
@@ -157,6 +231,36 @@ def create_goal(goal: Goal):
 @version(1, 0)
 async def read_goal(goal_id: int, q: str = None):
     return {"goal_id": goal_id, "q": q}
+
+
+@app.post("/create-teamgoal/")
+@version(1, 0)
+def create_teamgoal(teamgoal: TeamGoal):
+    return {
+        "message": f"TeamGoal {teamgoal.name} created successfully!",
+        "data": teamgoal
+    }
+
+
+@app.get("/teamgoals/{teamgoal_id}")
+@version(1, 0)
+async def read_teamgoal(teamgoal_id: int, q: str = None):
+    return {"teamgoal_id": teamgoal_id, "q": q}
+
+
+@app.post("/create-persongoal/")
+@version(1, 0)
+def create_persongoal(persongoal: PersonGoal):
+    return {
+        "message": f"PersonGoal {persongoal.name} created successfully!",
+        "data": persongoal
+    }
+
+
+@app.get("/persongoals/{persongoal_id}")
+@version(1, 0)
+async def read_persongoal(persongoal_id: int, q: str = None):
+    return {"persongoal_id": persongoal_id, "q": q}
 
 
 @app.get("/")
