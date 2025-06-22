@@ -1,4 +1,3 @@
-import datetime
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi_versioning import VersionedFastAPI, version
 from pydantic import BaseModel
@@ -6,84 +5,20 @@ from sqlmodel import Field, Session, SQLModel, create_engine
 from typing import Annotated
 from src.services.user_service import create_user_service, read_user_service
 from src.models.user import User
-
+from src.models.skill import Skill
+from src.models.goal import Goal
+from src.models.teamgoal import TeamGoal
+from src.models.persongoal import PersonGoal
+from src.models.tool import Tool
+from src.models.skilltool import SkillTool
+from src.models.role import Role
+from src.models.person import Person
+from src.models.personskill import PersonSkill
+from src.models.personskillhistory import PersonSkillHistory
+from src.models.team import Team
+from src.models.teamperson import TeamPerson
 
 data = [User(user_id=1, name="Erik", age=52, email="erikpohl.444@gmail.com")]
-
-
-class Skill(BaseModel):
-    skill_id: int
-    name: str
-
-
-class Goal(BaseModel):
-    goal_id: int
-    skill_id: int
-    name: str
-
-
-class TeamGoal(BaseModel):
-    goal_id: int
-    team_id: int
-    max_team_score_exceeds: int
-    avg_score: int
-    due_date: datetime.date
-
-
-class PersonGoal(BaseModel):
-    goal_id: int
-    person_id: int
-    exceeds_score: int
-    due_date: datetime.date
-
-
-class Tool(BaseModel):
-    tool_id: int
-    tool_name: str
-
-
-class SkillTool(BaseModel):
-    skilltool_id: int
-    tool_id: int
-    skill_id: int
-
-
-class Role(BaseModel):
-    role_id: int
-    name: str
-
-
-class Person(BaseModel):
-    person_id: int
-    name: str
-    role_id: int
-
-
-class PersonSkill(BaseModel):
-    personskill_id: int
-    person_id: int
-    skill_id: int
-    score: int
-
-
-class PersonSkillHistory(BaseModel):
-    personskill_id: int
-    date: datetime.date
-    score: int
-
-
-class Team(BaseModel):
-    team_id: int
-    parent_team_id: int
-    name: str
-    manager: int
-
-
-class TeamPerson(BaseModel):
-    teamperson_id: int
-    team_id: int
-    person_id: int
-
 
 sqlite_file_name = "./data/database.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
