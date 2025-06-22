@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from sqlmodel import Session
-from src.main import User  # Adjust import as needed
+from src.models.user import User
 
 def create_user_service(user: User, session: Session):
     session.add(user)

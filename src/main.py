@@ -16,6 +16,9 @@ from src.models.personskill import PersonSkill
 from src.models.personskillhistory import PersonSkillHistory
 from src.models.team import Team
 from src.models.teamperson import TeamPerson
+from src.services.person_service import create_person_service, read_person_service
+from src.services.tool_service import create_tool_service, read_tool_service
+
 
 data = [User(user_id=1, name="Erik", age=52, email="erikpohl.444@gmail.com")]
 
@@ -56,16 +59,13 @@ def get_db():  # stub, inspiration
 @app.post("/create-user/")
 @version(1, 0)
 def create_user(user: User, session: SessionDep):
-    data[0] = user
     return create_user_service(user, session)
 
 
 @app.get("/users/{user_id}")
 @version(1, 0)
 async def read_user(user_id: int, session: SessionDep, q: str = None):
-    x = data[0]
-    user = read_user_service(user_id, session)
-    return {"user_id": user.user_id, "user": user, "q": q}
+    return read_user_service(user_id, session)
 
 
 @app.post("/create-skill/")
@@ -101,31 +101,25 @@ async def read_team(team_id: int, q: str = None):
 @app.post("/create-tool/")
 @version(1, 0)
 def create_tool(tool: Tool):
-    return {
-        "message": f"Tool {tool.name} created successfully!",
-        "data": tool
-    }
+    return create_tool_service(tool)
 
 
 @app.get("/tools/{tool_id}")
 @version(1, 0)
 async def read_tool(tool_id: int, q: str = None):
-    return {"tool_id": tool_id, "q": q}
+    return read_tool_service(tool_id)
 
 
 @app.post("/create-person/")
 @version(1, 0)
 def create_person(person: Person):
-    return {
-        "message": f"Person {person.name} created successfully!",
-        "data": person
-    }
+    return create_person_service(person)
 
 
 @app.get("/persons/{person_id}")
 @version(1, 0)
 async def read_person(person_id: int, q: str = None):
-    return {"person_id": person_id, "q": q}
+    return read_person_service(person_id)
 
 
 @app.post("/create-teamperson/")
