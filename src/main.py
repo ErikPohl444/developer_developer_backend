@@ -85,158 +85,158 @@ async def read_user(user_id: int, session: SessionDep, q: str = None):
 
 @app.post("/create-skill/")
 @version(1, 0)
-def create_skill(skill: Skill):
-    return create_skill_service(skill)
+def create_skill(skill: Skill, session: Session):
+    return create_skill_service(skill, session)
 
 
 @app.get("/skills/{skill_id}")
 @version(1, 0)
-async def read_skill(skill_id: int, q: str = None):
-    return read_skill_service(skill_id)
+async def read_skill(skill_id: int, session: Session, q: str = None):
+    return read_skill_service(skill_id, session)
 
 
 @app.post("/create-team/")
 @version(1, 0)
-def create_team(team: Team):
-    return create_team_service(team)
+def create_team(team: Team, session: Session):
+    return create_team_service(team, session)
 
 
 @app.get("/teams/{team_id}")
 @version(1, 0)
-async def read_team(team_id: int, q: str = None):
-    return read_team_service(team_id)
+async def read_team(team_id: int, session: Session, q: str = None):
+    return read_team_service(team_id, session)
 
 
 @app.post("/create-tool/")
 @version(1, 0)
-def create_tool(tool: Tool):
-    return create_tool_service(tool)
+def create_tool(tool: Tool, session: Session):
+    return create_tool_service(tool, session)
 
 
 @app.get("/tools/{tool_id}")
 @version(1, 0)
-async def read_tool(tool_id: int, q: str = None):
-    return read_tool_service(tool_id)
+async def read_tool(tool_id: int, session: Session, q: str = None):
+    return read_tool_service(tool_id, session)
 
 
 @app.post("/create-person/")
 @version(1, 0)
-def create_person(person: Person):
-    return create_person_service(person)
+def create_person(person: Person, session: Session):
+    return create_person_service(person, session)
 
 
 @app.get("/persons/{person_id}")
 @version(1, 0)
-async def read_person(person_id: int, q: str = None):
-    return read_person_service(person_id)
+async def read_person(person_id: int, session: Session, q: str = None):
+    return read_person_service(person_id, session)
 
 
 @app.post("/create-teamperson/")
 @version(1, 0)
-def create_teamperson(teamperson: TeamPerson):
-    return create_teamperson_service(teamperson)
+def create_teamperson(teamperson: TeamPerson, session: Session):
+    return create_teamperson_service(teamperson, session)
 
 
 @app.get("/readteampersons/{teamperson_id}")
 @version(1, 0)
-async def read_teamperson(teamperson_id: int, q: str = None):
-    return read_teamperson_service(teamperson_id)
+async def read_teamperson(teamperson_id: int, session: Session, q: str = None):
+    return read_teamperson_service(teamperson_id, session)
 
 
 @app.post("/create-personskill/")
 @version(1, 0)
-def create_personskill(personskill: PersonSkill):
-    return create_personskill_service(personskill)
+def create_personskill(personskill: PersonSkill, session: Session):
+    return create_personskill_service(personskill, session)
 
 
 @app.get("/personskills/{personskill_id}")
 @version(1, 0)
-async def read_personskill(personskill_id: int, q: str = None):
-    return read_personskill_service(personskill_id)
+async def read_personskill(personskill_id: int, session: Session, q: str = None):
+    return read_personskill_service(personskill_id, session)
 
 
 @app.post("/create-personskillhistory/")
 @version(1, 0)
-def create_personskillhistory(personskillhistory: PersonSkillHistory):
-    return create_personskillhistory_service(personskillhistory)
+def create_personskillhistory(personskillhistory: PersonSkillHistory, session: Session):
+    return create_personskillhistory_service(personskillhistory, session)
 
 
 @app.get("/personskillhistories/{personskillhistory_id}")
 @version(1, 0)
-async def read_personskillhistories(personskillhistory_id: int, q: str = None):
-    return read_personskillhistory_service(personskillhistory_id)
+async def read_personskillhistories(personskillhistory_id: int, session: Session, q: str = None):
+    return read_personskillhistory_service(personskillhistory_id, session)
 
 
 @app.post("/create-role/")
 @version(1, 0)
-def create_role(role: Role):
-    return create_role_service(role)
+def create_role(role: Role, session: Session):
+    return create_role_service(role, session)
 
 
 @app.get("/roles/{role_id}")
 @version(1, 0)
-async def read_role(role_id: int, q: str = None):
-    return read_role_service(role_id)
+async def read_role(role_id: int, session: Session, q: str = None):
+    return read_role_service(role_id, session)
 
 
 @app.post("/create-person/")
 @version(1, 0)
-def create_person(person: Role):
-    return create_person_service(person)
+def create_person(person: Role, session: Session):
+    return create_person_service(person, session)
 
 
 @app.get("/persons/{person_id}")
 @version(1, 0)
-async def read_person(person_id: int, q: str = None):
-    return read_person_service(person_id)
+async def read_person(person_id: int, session: Session, q: str = None):
+    return read_person_service(person_id, session)
 
 
 @app.post("/create-tool/")
 @version(1, 0)
-def create_tool(tool: SkillTool):
-    return create_tool_service(tool)
+def create_tool(tool: SkillTool, session: Session):
+    return create_tool_service(tool, Session)
 
 
 @app.get("/tools/{tool_id}")
 @version(1, 0)
-async def read_tool(tool_id: int, q: str = None):
-    return read_tool_service(tool_id)
+async def read_tool(tool_id: int, session: Session, q: str = None):
+    return read_tool_service(tool_id, session)
 
 
 @app.post("/create-goal/")
 @version(1, 0)
-def create_goal(goal: Goal):
-    return create_goal_service(goal)
+def create_goal(goal: Goal, session: Session):
+    return create_goal_service(goal, session)
 
 
 @app.get("/goals/{goal_id}")
 @version(1, 0)
-async def read_goal(goal_id: int, q: str = None):
-    return read_goal_service(goal_id)
+async def read_goal(goal_id: int, session: Session, q: str = None):
+    return read_goal_service(goal_id, session)
 
 
 @app.post("/create-teamgoal/")
 @version(1, 0)
-def create_teamgoal(teamgoal: TeamGoal):
-    return create_teamgoal_service(teamgoal)
+def create_teamgoal(teamgoal: TeamGoal, session: Session):
+    return create_teamgoal_service(teamgoal, session)
 
 
 @app.get("/teamgoals/{teamgoal_id}")
 @version(1, 0)
-async def read_teamgoal(teamgoal_id: int, q: str = None):
-    return read_teamgoal_service(teamgoal_id)
+async def read_teamgoal(teamgoal_id: int, session: Session, q: str = None):
+    return read_teamgoal_service(teamgoal_id, session)
 
 
 @app.post("/create-persongoal/")
 @version(1, 0)
-def create_persongoal(persongoal: PersonGoal):
-    return create_persongoal_service(persongoal)
+def create_persongoal(persongoal: PersonGoal, session: Session):
+    return create_persongoal_service(persongoal, session)
 
 
 @app.get("/persongoals/{persongoal_id}")
 @version(1, 0)
-async def read_persongoal(persongoal_id: int, q: str = None):
-    return read_persongoal_service(persongoal_id)
+async def read_persongoal(persongoal_id: int, session: Session, q: str = None):
+    return read_persongoal_service(persongoal_id, session)
 
 
 @app.get("/health")
