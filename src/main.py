@@ -17,7 +17,16 @@ from src.models.personskillhistory import PersonSkillHistory
 from src.models.team import Team
 from src.models.teamperson import TeamPerson
 from src.services.person_service import create_person_service, read_person_service
+from src.services.personskill_service import create_personskill_service, read_personskill_service
+from src.services.persongoal_service import create_persongoal_service, read_persongoal_service
+from src.services.personskillhistory_service import create_personskillhistory_service, read_personskillhistory_service
 from src.services.tool_service import create_tool_service, read_tool_service
+from src.services.goal_service import create_goal_service, read_goal_service
+from src.services.role_service import create_role_service, read_role_service
+from src.services.skill_service import create_skill_service, read_skill_service
+from src.services.team_service import create_team_service, read_team_service
+from src.services.teamgoal_service import create_teamgoal_service, read_teamgoal_service
+from src.services.teamperson_service import create_teamperson_service, read_teamperson_service
 
 
 data = [User(user_id=1, name="Erik", age=52, email="erikpohl.444@gmail.com")]
@@ -56,6 +65,12 @@ def get_db():  # stub, inspiration
         db.close()
 
 
+@app.get("/")
+@version(1, 0)
+async def root():
+    return {"message": "Hello World!  Welcome to Develop!"}
+
+
 @app.post("/create-user/")
 @version(1, 0)
 def create_user(user: User, session: SessionDep):
@@ -71,31 +86,25 @@ async def read_user(user_id: int, session: SessionDep, q: str = None):
 @app.post("/create-skill/")
 @version(1, 0)
 def create_skill(skill: Skill):
-    return {
-        "message": f"Skill {skill.name} created successfully!",
-        "data": skill
-    }
+    return create_skill_service(skill)
 
 
 @app.get("/skills/{skill_id}")
 @version(1, 0)
 async def read_skill(skill_id: int, q: str = None):
-    return {"skill_id": skill_id, "q": q}
+    return read_skill_service(skill_id)
 
 
 @app.post("/create-team/")
 @version(1, 0)
 def create_team(team: Team):
-    return {
-        "message": f"Team {team.name} created successfully!",
-        "data": team
-    }
+    return create_team_service(team)
 
 
 @app.get("/teams/{team_id}")
 @version(1, 0)
 async def read_team(team_id: int, q: str = None):
-    return {"team_id": team_id, "q": q}
+    return read_team_service(team_id)
 
 
 @app.post("/create-tool/")
@@ -125,142 +134,109 @@ async def read_person(person_id: int, q: str = None):
 @app.post("/create-teamperson/")
 @version(1, 0)
 def create_teamperson(teamperson: TeamPerson):
-    return {
-        "message": f"TeamPerson {teamperson.name} created successfully!",
-        "data": teamperson
-    }
+    return create_teamperson_service(teamperson)
 
 
-@app.get("/reampersons/{teamperson_id}")
+@app.get("/readteampersons/{teamperson_id}")
 @version(1, 0)
 async def read_teamperson(teamperson_id: int, q: str = None):
-    return {"teamperson_id": teamperson_id, "q": q}
+    return read_teamperson_service(teamperson_id)
 
 
 @app.post("/create-personskill/")
 @version(1, 0)
 def create_personskill(personskill: PersonSkill):
-    return {
-        "message": f"PersonSkill {personskill.name} created successfully!",
-        "data": personskill
-    }
+    return create_personskill_service(personskill)
 
 
 @app.get("/personskills/{personskill_id}")
 @version(1, 0)
 async def read_personskill(personskill_id: int, q: str = None):
-    return {"personskill_id": personskill_id, "q": q}
+    return read_personskill_service(personskill_id)
 
 
 @app.post("/create-personskillhistory/")
 @version(1, 0)
 def create_personskillhistory(personskillhistory: PersonSkillHistory):
-    return {
-        "message": f"PersonSkill {personskillhistory.name} created successfully!",
-        "data": personskillhistory
-    }
+    return create_personskillhistory_service(personskillhistory)
 
 
 @app.get("/personskillhistories/{personskillhistory_id}")
 @version(1, 0)
 async def read_personskillhistories(personskillhistory_id: int, q: str = None):
-    return {"personskillhistory_id": personskillhistory_id, "q": q}
+    return read_personskillhistory_service(personskillhistory_id)
 
 
 @app.post("/create-role/")
 @version(1, 0)
 def create_role(role: Role):
-    return {
-        "message": f"Role {role.name} created successfully!",
-        "data": role
-    }
+    return create_role_service(role)
 
 
 @app.get("/roles/{role_id}")
 @version(1, 0)
 async def read_role(role_id: int, q: str = None):
-    return {"role_id": role_id, "q": q}
+    return read_role_service(role_id)
 
 
 @app.post("/create-person/")
 @version(1, 0)
 def create_person(person: Role):
-    return {
-        "message": f"Person {person.name} created successfully!",
-        "data": person
-    }
+    return create_person_service(person)
 
 
-@app.get("/people/{person_id}")
+@app.get("/persons/{person_id}")
 @version(1, 0)
 async def read_person(person_id: int, q: str = None):
-    return {"person_id": person_id, "q": q}
+    return read_person_service(person_id)
 
 
 @app.post("/create-tool/")
 @version(1, 0)
 def create_tool(tool: SkillTool):
-    return {
-        "message": f"Tool {tool.name} created successfully!",
-        "data": tool
-    }
+    return create_tool_service(tool)
 
 
 @app.get("/tools/{tool_id}")
 @version(1, 0)
 async def read_tool(tool_id: int, q: str = None):
-    return {"tool_id": tool_id, "q": q}
+    return read_tool_service(tool_id)
 
 
 @app.post("/create-goal/")
 @version(1, 0)
 def create_goal(goal: Goal):
-    return {
-        "message": f"Goal {goal.name} created successfully!",
-        "data": goal
-    }
+    return create_goal_service(goal)
 
 
 @app.get("/goals/{goal_id}")
 @version(1, 0)
 async def read_goal(goal_id: int, q: str = None):
-    return {"goal_id": goal_id, "q": q}
+    return read_goal_service(goal_id)
 
 
 @app.post("/create-teamgoal/")
 @version(1, 0)
 def create_teamgoal(teamgoal: TeamGoal):
-    return {
-        "message": f"TeamGoal {teamgoal.name} created successfully!",
-        "data": teamgoal
-    }
+    return create_teamgoal_service(teamgoal)
 
 
 @app.get("/teamgoals/{teamgoal_id}")
 @version(1, 0)
 async def read_teamgoal(teamgoal_id: int, q: str = None):
-    return {"teamgoal_id": teamgoal_id, "q": q}
+    return read_teamgoal_service(teamgoal_id)
 
 
 @app.post("/create-persongoal/")
 @version(1, 0)
 def create_persongoal(persongoal: PersonGoal):
-    return {
-        "message": f"PersonGoal {persongoal.name} created successfully!",
-        "data": persongoal
-    }
+    return create_persongoal_service(persongoal)
 
 
 @app.get("/persongoals/{persongoal_id}")
 @version(1, 0)
 async def read_persongoal(persongoal_id: int, q: str = None):
-    return {"persongoal_id": persongoal_id, "q": q}
-
-
-@app.get("/")
-@version(1, 0)
-async def root():
-    return {"message": "Hello World!  Welcome to Develop!"}
+    return read_persongoal_service(persongoal_id)
 
 
 @app.get("/health")
