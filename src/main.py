@@ -138,7 +138,7 @@ def create_teamperson(teamperson: TeamPerson, session: SessionDep = Depends(get_
     return create_teamperson_service(teamperson, session)
 
 
-@app.get("/readteampersons/{teamperson_id}")
+@app.get("/read-teampersons/{teamperson_id}")
 @version(1, 0)
 async def read_teamperson(teamperson_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_teamperson_service(teamperson_id, session)
