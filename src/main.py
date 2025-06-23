@@ -180,18 +180,6 @@ async def read_role(role_id: int, session: SessionDep = Depends(get_session), q:
     return read_role_service(role_id, session)
 
 
-@app.post("/create-person/")
-@version(1, 0)
-def create_person(person: Role, session: SessionDep = Depends(get_session)):
-    return create_person_service(person, session)
-
-
-@app.get("/persons/{person_id}")
-@version(1, 0)
-async def read_person(person_id: int, session: SessionDep = Depends(get_session), q: str = None):
-    return read_person_service(person_id, session)
-
-
 @app.post("/create-skilltool/")
 @version(1, 0)
 def create_skilltool(skilltool: SkillTool, session: SessionDep = Depends(get_session)):
