@@ -24,6 +24,7 @@ from src.services.tool_service import create_tool_service, read_tool_service
 from src.services.goal_service import create_goal_service, read_goal_service
 from src.services.role_service import create_role_service, read_role_service
 from src.services.skill_service import create_skill_service, read_skill_service
+from src.services.skilltool_service import create_skilltool_service, read_skilltool_service
 from src.services.team_service import create_team_service, read_team_service
 from src.services.teamgoal_service import create_teamgoal_service, read_teamgoal_service
 from src.services.teamperson_service import create_teamperson_service, read_teamperson_service
@@ -193,14 +194,14 @@ async def read_person(person_id: int, session: SessionDep = Depends(get_session)
 
 @app.post("/create-skilltool/")
 @version(1, 0)
-def create_skilltool(tool: SkillTool, session: SessionDep = Depends(get_session)):
-    return create_tool_service(tool, session)
+def create_skilltool(skilltool: SkillTool, session: SessionDep = Depends(get_session)):
+    return create_skilltool_service(skilltool, session)
 
 
-@app.get("/skilltools/{tool_id}")
+@app.get("/skilltools/{skilltool_id}")
 @version(1, 0)
-async def read_skilltool(tool_id: int, session: SessionDep = Depends(get_session), q: str = None):
-    return read_tool_service(tool_id, session)
+async def read_skilltool(skilltool_id: int, session: SessionDep = Depends(get_session), q: str = None):
+    return read_skilltool_service(skilltool_id, session)
 
 
 @app.post("/create-goal/")
