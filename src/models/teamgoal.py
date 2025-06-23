@@ -2,7 +2,7 @@ from sqlmodel import SQLModel
 import datetime
 
 
-class TeamGoal(SQLModel):
+class TeamGoal(SQLModel, table=True):
     goal_id: int
     team_id: int
     max_team_score_exceeds: int
