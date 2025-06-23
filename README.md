@@ -10,11 +10,11 @@ The Developer Developer [backend] is a FastAPI backend for the Developer Develop
 List a roadmap or future plans for the repo work.
 
 - [ ] Implement CRUD endpoints for all data models (User, Skill, Role, Person, PersonSkill, PersonSkillHistory, Team, TeamPerson, SkillTool)
-- [ ] Integrate with a persistent database (e.g., PostgreSQL)
+- [x] Integrate with a persistent database (e.g., PostgreSQL)
 - [ ] Add authentication and authorization
 - [ ] Create endpoints for analytics and team skill reporting
 - [ ] Write comprehensive tests for all endpoints
-- [ ] Add API documentation using OpenAPI/Swagger [automatically handled by FastAPI]
+- [x] Add API documentation using OpenAPI/Swagger [automatically handled by FastAPI]
 
 ## Important disclaimer
 
