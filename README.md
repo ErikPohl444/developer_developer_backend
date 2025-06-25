@@ -53,8 +53,33 @@ pip install -r requirements.txt
 ```
 ---
 ## Running the tests
+Certainly! Here is a revised Testing section for your README.md that specifically instructs users to run the tests under the /tests folder:
 
-Currently, there are no tests implemented. In the future, tests will be added using pytest.
+---
+
+## Testing
+
+This project uses [pytest](https://pytest.readthedocs.io/) for testing.
+
+To run all tests located in the `/tests` folder, follow these steps:
+
+1. **Install dependencies** (if not already done):
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+2. **Run the tests in the `/tests` folder:**
+
+    ```bash
+    pytest tests/
+    ```
+
+You can add the `-v` flag for more verbose output:
+
+```bash
+pytest -v tests/
+```
 
 ---
 ## Technologies used

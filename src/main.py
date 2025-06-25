@@ -51,7 +51,7 @@ def get_session():
 SessionDep = Annotated[Session, Depends(get_session)]
 
 
-app = FastAPI(title="Developer Developer")
+base_app = FastAPI(title="Developer Developer")
 
 
 def connect_to_db():  # stub, inspiration
@@ -66,176 +66,176 @@ def get_db():  # stub, inspiration
         db.close()
 
 
-@app.get("/")
+@base_app.get("/")
 @version(1, 0)
 async def root():
     return {"message": "Hello World!  Welcome to Develop!"}
 
 
-@app.post("/create-user/")
+@base_app.post("/create-user/")
 @version(1, 0)
 def create_user(user: User, session: SessionDep = Depends(get_session)):
     return create_user_service(user, session)
 
 
-@app.get("/users/{user_id}")
+@base_app.get("/users/{user_id}")
 @version(1, 0)
 async def read_user(user_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_user_service(user_id, session)
 
 
-@app.post("/create-skill/")
+@base_app.post("/create-skill/")
 @version(1, 0)
 def create_skill(skill: Skill, session: SessionDep = Depends(get_session)):
     return create_skill_service(skill, session)
 
 
-@app.get("/skills/{skill_id}")
+@base_app.get("/skills/{skill_id}")
 @version(1, 0)
 async def read_skill(skill_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_skill_service(skill_id, session)
 
 
-@app.post("/create-team/")
+@base_app.post("/create-team/")
 @version(1, 0)
 def create_team(team: Team, session: SessionDep = Depends(get_session)):
     return create_team_service(team, session)
 
 
-@app.get("/teams/{team_id}")
+@base_app.get("/teams/{team_id}")
 @version(1, 0)
 async def read_team(team_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_team_service(team_id, session)
 
 
-@app.post("/create-tool/")
+@base_app.post("/create-tool/")
 @version(1, 0)
 def create_tool(tool: Tool, session: SessionDep = Depends(get_session)):
     return create_tool_service(tool, session)
 
 
-@app.get("/tools/{tool_id}")
+@base_app.get("/tools/{tool_id}")
 @version(1, 0)
 async def read_tool(tool_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_tool_service(tool_id, session)
 
 
-@app.post("/create-person/")
+@base_app.post("/create-person/")
 @version(1, 0)
 def create_person(person: Person, session: SessionDep = Depends(get_session)):
     return create_person_service(person, session)
 
 
-@app.get("/persons/{person_id}")
+@base_app.get("/persons/{person_id}")
 @version(1, 0)
 async def read_person(person_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_person_service(person_id, session)
 
 
-@app.post("/create-teamperson/")
+@base_app.post("/create-teamperson/")
 @version(1, 0)
 def create_teamperson(teamperson: TeamPerson, session: SessionDep = Depends(get_session)):
     return create_teamperson_service(teamperson, session)
 
 
-@app.get("/read-teampersons/{teamperson_id}")
+@base_app.get("/read-teampersons/{teamperson_id}")
 @version(1, 0)
 async def read_teamperson(teamperson_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_teamperson_service(teamperson_id, session)
 
 
-@app.post("/create-personskill/")
+@base_app.post("/create-personskill/")
 @version(1, 0)
 def create_personskill(personskill: PersonSkill, session: SessionDep = Depends(get_session)):
     return create_personskill_service(personskill, session)
 
 
-@app.get("/personskills/{personskill_id}")
+@base_app.get("/personskills/{personskill_id}")
 @version(1, 0)
 async def read_personskill(personskill_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_personskill_service(personskill_id, session)
 
 
-@app.post("/create-personskillhistory/")
+@base_app.post("/create-personskillhistory/")
 @version(1, 0)
 def create_personskillhistory(personskillhistory: PersonSkillHistory, session: SessionDep = Depends(get_session)):
     return create_personskillhistory_service(personskillhistory, session)
 
 
-@app.get("/personskillhistories/{personskillhistory_id}")
+@base_app.get("/personskillhistories/{personskillhistory_id}")
 @version(1, 0)
 async def read_personskillhistories(personskillhistory_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_personskillhistory_service(personskillhistory_id, session)
 
 
-@app.post("/create-role/")
+@base_app.post("/create-role/")
 @version(1, 0)
 def create_role(role: Role, session: SessionDep = Depends(get_session)):
     return create_role_service(role, session)
 
 
-@app.get("/roles/{role_id}")
+@base_app.get("/roles/{role_id}")
 @version(1, 0)
 async def read_role(role_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_role_service(role_id, session)
 
 
-@app.post("/create-skilltool/")
+@base_app.post("/create-skilltool/")
 @version(1, 0)
 def create_skilltool(skilltool: SkillTool, session: SessionDep = Depends(get_session)):
     return create_skilltool_service(skilltool, session)
 
 
-@app.get("/skilltools/{skilltool_id}")
+@base_app.get("/skilltools/{skilltool_id}")
 @version(1, 0)
 async def read_skilltool(skilltool_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_skilltool_service(skilltool_id, session)
 
 
-@app.post("/create-goal/")
+@base_app.post("/create-goal/")
 @version(1, 0)
 def create_goal(goal: Goal, session: SessionDep = Depends(get_session)):
     return create_goal_service(goal, session)
 
 
-@app.get("/goals/{goal_id}")
+@base_app.get("/goals/{goal_id}")
 @version(1, 0)
 async def read_goal(goal_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_goal_service(goal_id, session)
 
 
-@app.post("/create-teamgoal/")
+@base_app.post("/create-teamgoal/")
 @version(1, 0)
 def create_teamgoal(teamgoal: TeamGoal, session: SessionDep = Depends(get_session)):
     return create_teamgoal_service(teamgoal, session)
 
 
-@app.get("/teamgoals/{teamgoal_id}")
+@base_app.get("/teamgoals/{teamgoal_id}")
 @version(1, 0)
 async def read_teamgoal(teamgoal_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_teamgoal_service(teamgoal_id, session)
 
 
-@app.post("/create-persongoal/")
+@base_app.post("/create-persongoal/")
 @version(1, 0)
 def create_persongoal(persongoal: PersonGoal, session: SessionDep = Depends(get_session)):
     return create_persongoal_service(persongoal, session)
 
 
-@app.get("/persongoals/{persongoal_id}")
+@base_app.get("/persongoals/{persongoal_id}")
 @version(1, 0)
 async def read_persongoal(persongoal_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_persongoal_service(persongoal_id, session)
 
 
-@app.get("/health")
+@base_app.get("/health")
 @version(1, 0)
 async def health_check():
     return {"status": "healthy"}
 
-app = VersionedFastAPI(app)
+app = VersionedFastAPI(base_app)
 
 
-@app.on_event("startup")
+@base_app.on_event("startup")
 def on_startup():
     create_db_and_tables()
