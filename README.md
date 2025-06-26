@@ -90,6 +90,10 @@ List the technologies used here.
 - FastAPI
 - Pydantic
 
+---
+## ERD
+[ERD](docs/ERD.mmd)
+
 ## Minimum system requirements
 
 - Python 3.8+
