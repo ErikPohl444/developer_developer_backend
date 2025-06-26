@@ -3,6 +3,10 @@ import datetime
 
 
 class PersonSkillHistory(SQLModel, table=True):
+    """
+    SQLModel PersonSkillHistory
+    Purpose: This is a history of skill scores for a person and a skill
+    """
     created_by: int = Field(foreign_key="user.user_id")
     create_date: datetime.datetime = Field(default = datetime.date.today)
     updated_by: int = Field(foreign_key="user.user_id")

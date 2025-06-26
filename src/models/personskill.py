@@ -3,6 +3,10 @@ import datetime
 
 
 class PersonSkill(SQLModel, table=True):
+    """
+    SQLModel PersonSkill
+    Purpose: This is the current skill level for a person and a skill
+    """
     created_by: int = Field(foreign_key="user.user_id")
     create_date: datetime.datetime = Field(default = datetime.date.today)
     updated_by: int = Field(foreign_key="user.user_id")
