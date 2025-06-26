@@ -4,9 +4,9 @@ import datetime
 
 class TeamGoal(SQLModel, table=True):
     created_by: int = Field(foreign_key="user.user_id")
-    create_date: datetime.date
+    create_date: datetime.datetime = Field(default = datetime.date.today)
     updated_by: int = Field(foreign_key="user.user_id")
-    update_date: datetime.date
+    update_date: datetime.datetime = Field(default = datetime.date.today)
     teamgoal_id: int | None = Field(default=None, primary_key=True)
     goal_id: int = Field(foreign_key="goal.goal_id")
     team_id: int = Field(foreign_key="team.team_id")
