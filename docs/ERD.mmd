@@ -111,5 +111,13 @@ erDiagram
     %% created_by and updated_by FKs to USER
     PERSON }|..|{ USER : "created_by/updated_by"
     ROLE }|..|{ USER : "created_by/updated_by"
-    TEAM }|..|{ USER
-
+    TEAM }|..|{ USER : "created_by/updated_by"
+    SKILL }|..|{ USER : "created_by/updated_by"
+    GOAL }|..|{ USER : "created_by/updated_by"
+    PERSONGOAL }|..|{ USER : "created_by/updated_by"
+    PERSONSKILL }|..|{ USER : "created_by/updated_by"
+    PERSONSKILLHISTORY }|..|{ USER : "created_by/updated_by"
+    TEAMGOAL }|..|{ USER : "created_by/updated_by"
+    SKILLTOOL }|..|{ USER : "created_by/updated_by"
+    TOOL }|..|{ USER : "created_by/updated_by"
+    TEAMPERSON }|..|{ USER : "created_by/updated_by"
