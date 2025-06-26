@@ -92,7 +92,7 @@ List the technologies used here.
 
 ---
 ## ERD
-[ERD](./ERD.mmd)
+[ERD](docs/ERD.mmd)
 
 ## Minimum system requirements
 
