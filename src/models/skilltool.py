@@ -3,6 +3,10 @@ import datetime
 
 
 class SkillTool(SQLModel, table=True):
+    """
+    SQLModel SkillTool
+    Purpose: Relate skills to tools which improve those skills
+    """
     created_by: int = Field(foreign_key="user.user_id")
     create_date: datetime.datetime = Field(default = datetime.date.today)
     updated_by: int = Field(foreign_key="user.user_id")
