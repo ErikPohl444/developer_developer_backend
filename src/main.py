@@ -5,7 +5,6 @@ from typing import Annotated
 from src.services.user_service import create_user_service, read_user_service
 from src.models.user import User
 from src.models.skill import Skill
-from src.models.goal import Goal
 from src.models.teamgoal import TeamGoal
 from src.models.persongoal import PersonGoal
 from src.models.tool import Tool
@@ -21,7 +20,6 @@ from src.services.personskill_service import create_personskill_service, read_pe
 from src.services.persongoal_service import create_persongoal_service, read_persongoal_service
 from src.services.personskillhistory_service import create_personskillhistory_service, read_personskillhistory_service
 from src.services.tool_service import create_tool_service, read_tool_service
-from src.services.goal_service import create_goal_service, read_goal_service
 from src.services.role_service import create_role_service, read_role_service
 from src.services.skill_service import create_skill_service, read_skill_service
 from src.services.skilltool_service import create_skilltool_service, read_skilltool_service
@@ -190,18 +188,6 @@ def create_skilltool(skilltool: SkillTool, session: SessionDep = Depends(get_ses
 @version(1, 0)
 async def read_skilltool(skilltool_id: int, session: SessionDep = Depends(get_session), q: str = None):
     return read_skilltool_service(skilltool_id, session)
-
-
-@base_app.post("/create-goal/")
-@version(1, 0)
-def create_goal(goal: Goal, session: SessionDep = Depends(get_session)):
-    return create_goal_service(goal, session)
-
-
-@base_app.get("/goals/{goal_id}")
-@version(1, 0)
-async def read_goal(goal_id: int, session: SessionDep = Depends(get_session), q: str = None):
-    return read_goal_service(goal_id, session)
 
 
 @base_app.post("/create-teamgoal/")
