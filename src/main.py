@@ -3,6 +3,7 @@ from fastapi_versioning import VersionedFastAPI, version
 from sqlmodel import Session, SQLModel, create_engine
 from typing import Annotated
 from src.services.user_service import create_user_service, read_user_service
+from src.routers.user_router import router as user_router
 from src.models.user import User
 from src.models.skill import Skill
 from src.models.teamgoal import TeamGoal
@@ -50,6 +51,7 @@ SessionDep = Annotated[Session, Depends(get_session)]
 
 
 base_app = FastAPI(title="Developer Developer")
+base_app.include_router(user_router)
 
 
 def connect_to_db():  # stub, inspiration
@@ -68,18 +70,6 @@ def get_db():  # stub, inspiration
 @version(1, 0)
 async def root():
     return {"message": "Hello World!  Welcome to Develop!"}
-
-
-@base_app.post("/create-user/")
-@version(1, 0)
-def create_user(user: User, session: SessionDep = Depends(get_session)):
-    return create_user_service(user, session)
-
-
-@base_app.get("/users/{user_id}")
-@version(1, 0)
-async def read_user(user_id: int, session: SessionDep = Depends(get_session), q: str = None):
-    return read_user_service(user_id, session)
 
 
 @base_app.post("/create-skill/")
