@@ -2,86 +2,21 @@ erDiagram
     USER {
         int user_id PK
     }
-    ROLE {
-        int role_id PK
-        str name
+    PERSON {
+        int person_id PK
+        int role_id FK
         int created_by FK
         int updated_by FK
     }
-    PERSON {
-        int person_id PK
-        str name
-        int role_id FK
+    ROLE {
+        int role_id PK
         int created_by FK
         int updated_by FK
     }
     TEAM {
         int team_id PK
         int parent_team_id FK
-        str name
-        int manager
-        int created_by FK
-        int updated_by FK
-    }
-    SKILL {
-        int skill_id PK
-        str name
-        int created_by FK
-        int updated_by FK
-    }
-    GOAL {
-        int goal_id PK
-        int skill_id FK
-        str name
-        int created_by FK
-        int updated_by FK
-    }
-    PERSONGOAL {
-        int persongoal_id PK
-        int goal_id FK
-        int person_id FK
-        int exceeds_score
-        date due_date
-        int created_by FK
-        int updated_by FK
-    }
-    PERSONSKILL {
-        int personskill_id PK
-        int person_id FK
-        int skill_id FK
-        int score
-        int created_by FK
-        int updated_by FK
-    }
-    PERSONSKILLHISTORY {
-        int personskill_id PK
-        int person_id FK
-        int skill_id FK
-        int score
-        date date
-        int created_by FK
-        int updated_by FK
-    }
-    TEAMGOAL {
-        int teamgoal_id PK
-        int goal_id FK
-        int team_id FK
-        int max_team_score_exceeds
-        int avg_score
-        date due_date
-        int created_by FK
-        int updated_by FK
-    }
-    SKILLTOOL {
-        int skilltool_id PK
-        int tool_id FK
-        int skill_id FK
-        int created_by FK
-        int updated_by FK
-    }
-    TOOL {
-        int tool_id PK
-        str name
+        int manager FK
         int created_by FK
         int updated_by FK
     }
@@ -89,35 +24,75 @@ erDiagram
         int teamperson_id PK
         int team_id FK
         int person_id FK
+    }
+    TEAMGOAL {
+        int teamgoal_id PK
+        int team_id FK
+        int skill_id FK
+        int created_by FK
+        int updated_by FK
+    }
+    PERSONSKILL {
+        int personskill_id PK
+        int person_id FK
+        int skill_id FK
+        int created_by FK
+        int updated_by FK
+    }
+    PERSONGOAL {
+        int persongoal_id PK
+        int person_id FK
+        int skill_id FK
+        int created_by FK
+        int updated_by FK
+    }
+    PERSONSKILLHISTORY {
+        int personskill_id PK
+        int person_id FK
+        int skill_id FK
+        int created_by FK
+        int updated_by FK
+    }
+    SKILL {
+        int skill_id PK
+        int created_by FK
+        int updated_by FK
+    }
+    TOOL {
+        int tool_id PK
+        int created_by FK
+        int updated_by FK
+    }
+    SKILLTOOL {
+        int skilltool_id PK
+        int skill_id FK
+        int tool_id FK
         int created_by FK
         int updated_by FK
     }
 
-    PERSON }|..|{ ROLE : "role_id"
-    PERSONSKILL }|..|{ PERSON : "person_id"
-    PERSONSKILL }|..|{ SKILL : "skill_id"
-    PERSONGOAL }|..|{ GOAL : "goal_id"
-    PERSONGOAL }|..|{ PERSON : "person_id"
-    PERSONSKILLHISTORY }|..|{ PERSON : "person_id"
-    PERSONSKILLHISTORY }|..|{ SKILL : "skill_id"
-    GOAL }|..|{ SKILL : "skill_id"
-    TEAMGOAL }|..|{ TEAM : "team_id"
-    TEAMGOAL }|..|{ GOAL : "goal_id"
-    SKILLTOOL }|..|{ SKILL : "skill_id"
-    SKILLTOOL }|..|{ TOOL : "tool_id"
-    TEAM }|..|{ TEAM : "parent_team_id"
-    TEAMPERSON }|..|{ TEAM : "team_id"
-    TEAMPERSON }|..|{ PERSON : "person_id"
-    %% created_by and updated_by FKs to USER
-    PERSON }|..|{ USER : "created_by/updated_by"
-    ROLE }|..|{ USER : "created_by/updated_by"
-    TEAM }|..|{ USER : "created_by/updated_by"
-    SKILL }|..|{ USER : "created_by/updated_by"
-    GOAL }|..|{ USER : "created_by/updated_by"
-    PERSONGOAL }|..|{ USER : "created_by/updated_by"
-    PERSONSKILL }|..|{ USER : "created_by/updated_by"
-    PERSONSKILLHISTORY }|..|{ USER : "created_by/updated_by"
-    TEAMGOAL }|..|{ USER : "created_by/updated_by"
-    SKILLTOOL }|..|{ USER : "created_by/updated_by"
-    TOOL }|..|{ USER : "created_by/updated_by"
-    TEAMPERSON }|..|{ USER : "created_by/updated_by"
+    PERSON }o--|| ROLE : "role_id"
+    PERSON }o--|| USER : "created_by/updated_by"
+    ROLE }o--|| USER : "created_by/updated_by"
+    TEAM }o--|| USER : "created_by/updated_by"
+    TEAM }o--|| PERSON : "manager"
+    TEAM }o--|| TEAM : "parent_team_id"
+    TEAMPERSON }o--|| TEAM : "team_id"
+    TEAMPERSON }o--|| PERSON : "person_id"
+    TEAMGOAL }o--|| TEAM : "team_id"
+    TEAMGOAL }o--|| SKILL : "skill_id"
+    TEAMGOAL }o--|| USER : "created_by/updated_by"
+    PERSONSKILL }o--|| PERSON : "person_id"
+    PERSONSKILL }o--|| SKILL : "skill_id"
+    PERSONSKILL }o--|| USER : "created_by/updated_by"
+    PERSONGOAL }o--|| PERSON : "person_id"
+    PERSONGOAL }o--|| SKILL : "skill_id"
+    PERSONGOAL }o--|| USER : "created_by/updated_by"
+    PERSONSKILLHISTORY }o--|| PERSON : "person_id"
+    PERSONSKILLHISTORY }o--|| SKILL : "skill_id"
+    PERSONSKILLHISTORY }o--|| USER : "created_by/updated_by"
+    SKILLTOOL }o--|| SKILL : "skill_id"
+    SKILLTOOL }o--|| TOOL : "tool_id"
+    SKILLTOOL }o--|| USER : "created_by/updated_by"
+    SKILL }o--|| USER : "created_by/updated_by"
+    TOOL }o--|| USER : "created_by/updated_by"
