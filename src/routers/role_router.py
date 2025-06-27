@@ -11,10 +11,12 @@ router = APIRouter()
 @router.post("/create-role/")
 @version(1, 0)
 def create_role(role: Role, session: SessionDep = Depends(get_session)):
+    """Create a role."""
     return create_role_service(role, session)
 
 
 @router.get("/roles/{role_id}")
 @version(1, 0)
 async def read_role(role_id: int, session: SessionDep = Depends(get_session), q: str = None):
+    """Retrieve a role by its ID."""
     return read_role_service(role_id, session)

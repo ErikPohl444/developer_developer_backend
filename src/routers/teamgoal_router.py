@@ -11,10 +11,12 @@ router = APIRouter()
 @router.post("/create-teamperson/")
 @version(1, 0)
 def create_teamperson(teamperson: TeamPerson, session: SessionDep = Depends(get_session)):
+    """Create a teamgoal."""
     return create_teamperson_service(teamperson, session)
 
 
 @router.get("/read-teampersons/{teamperson_id}")
 @version(1, 0)
 async def read_teamperson(teamperson_id: int, session: SessionDep = Depends(get_session), q: str = None):
+    """Retrieve a teamgoal by its ID."""
     return read_teamperson_service(teamperson_id, session)
