@@ -7,7 +7,7 @@ from fastapi_versioning import VersionedFastAPI, version
 router = APIRouter()
 
 
-@router.post("/create-personskill/")
+@router.post("/personskills/")
 @version(1, 0)
 def create_personskill(personskill: PersonSkill, session: SessionDep = Depends(get_session)):
     """Retrieve a personskill by its ID."""

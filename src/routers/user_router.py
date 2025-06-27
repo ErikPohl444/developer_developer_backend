@@ -7,7 +7,7 @@ from fastapi_versioning import VersionedFastAPI, version
 router = APIRouter()
 
 
-@router.post("/create-user/")
+@router.post("/users/")
 @version(1, 0)
 def create_user(user: User, session: SessionDep = Depends(get_session)):
     """Create a user."""

@@ -7,7 +7,7 @@ from fastapi_versioning import VersionedFastAPI, version
 router = APIRouter()
 
 
-@router.post("/create-teamperson/")
+@router.post("/teampersons/")
 @version(1, 0)
 def create_teamperson(teamperson: TeamPerson, session: SessionDep = Depends(get_session)):
     """Create a teamperson."""

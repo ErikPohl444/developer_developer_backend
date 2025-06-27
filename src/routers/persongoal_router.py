@@ -7,7 +7,7 @@ from fastapi_versioning import VersionedFastAPI, version
 router = APIRouter()
 
 
-@router.post("/create-persongoal/")
+@router.post("/persongoals/")
 @version(1, 0)
 def create_persongoal(persongoal: PersonGoal, session: SessionDep = Depends(get_session)):
     """Retrieve a persongoal by their ID."""

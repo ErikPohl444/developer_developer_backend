@@ -7,7 +7,7 @@ from fastapi_versioning import VersionedFastAPI, version
 router = APIRouter()
 
 
-@router.post("/create-tool/")
+@router.post("/tools/")
 @version(1, 0)
 def create_tool(tool: Tool, session: SessionDep = Depends(get_session)):
     """Create a tool."""

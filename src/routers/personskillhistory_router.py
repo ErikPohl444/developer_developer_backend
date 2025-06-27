@@ -7,7 +7,7 @@ from fastapi_versioning import VersionedFastAPI, version
 router = APIRouter()
 
 
-@router.post("/create-personskillhistory/")
+@router.post("/personskillhistories/")
 @version(1, 0)
 def create_personskillhistory(personskillhistory: PersonSkillHistory, session: SessionDep = Depends(get_session)):
     """Create a personskilhistory entry."""

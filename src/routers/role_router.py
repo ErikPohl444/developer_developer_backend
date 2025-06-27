@@ -7,7 +7,7 @@ from fastapi_versioning import VersionedFastAPI, version
 router = APIRouter()
 
 
-@router.post("/create-role/")
+@router.post("/roles/")
 @version(1, 0)
 def create_role(role: Role, session: SessionDep = Depends(get_session)):
     """Create a role."""
