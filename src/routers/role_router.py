@@ -1,4 +1,3 @@
-from fastapi import APIRouter, Depends
 from src.models.role import Role
 from src.services.role_service import create_role_service, read_role_service
 from src.main import SessionDep, get_session

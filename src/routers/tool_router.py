@@ -1,4 +1,3 @@
-from fastapi import APIRouter, Depends
 from src.models.tool import Tool
 from src.services.tool_service import create_tool_service, read_tool_service
 from src.main import SessionDep, get_session

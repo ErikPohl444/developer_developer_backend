@@ -1,4 +1,3 @@
-from fastapi import APIRouter, Depends
 from src.models.user import User
 from src.services.user_service import create_user_service, read_user_service
 from src.main import SessionDep, get_session
