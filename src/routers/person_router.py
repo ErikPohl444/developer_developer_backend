@@ -1,21 +1,15 @@
 from src.models.person import Person
 from src.services.person_service import create_person_service, read_person_service
 from src.main import SessionDep, get_session
-from fastapi import APIRouter, Depends
-from fastapi_versioning import VersionedFastAPI, version
-
-router = APIRouter()
+from generic_router_factory import create_crud_router
 
 
-@router.post("/persons/")
-@version(1, 0)
-def create_person(person: Person, session: SessionDep = Depends(get_session)):
-    """Create a person."""
-    return create_person_service(person, session)
 
-
-@router.get("/persons/{person_id}")
-@version(1, 0)
-async def read_person(person_id: int, session: SessionDep = Depends(get_session), q: str = None):
-    """Retrieve a person by their ID."""
-    return read_person_service(person_id, session)
+router = create_crud_router(
+    model=Person,
+    create_service=create_person_service,
+    read_service=read_person_service,
+    resource_name="persons",
+    session_dep=SessionDep,
+    get_session_func=get_session,
+)
