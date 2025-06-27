@@ -1,5 +1,5 @@
-from src.models.teamperson import TeamPerson
-from src.services.teamperson_service import create_teamperson_service, read_teamperson_service
+from src.models.teamgoal import TeamGoal
+from src.services.teamgoal_service import create_teamgoal_service, read_teamgoal_service
 from src.main import SessionDep, get_session
 from fastapi import APIRouter, Depends
 from fastapi_versioning import VersionedFastAPI, version
@@ -7,15 +7,15 @@ from fastapi_versioning import VersionedFastAPI, version
 router = APIRouter()
 
 
-@router.post("/create-teamperson/")
+@router.post("/teampgoals/")
 @version(1, 0)
-def create_teamperson(teamperson: TeamPerson, session: SessionDep = Depends(get_session)):
+def create_teamgoal(teamgoal: TeamGoal, session: SessionDep = Depends(get_session)):
     """Create a teamgoal."""
-    return create_teamperson_service(teamperson, session)
+    return create_teamgoal_service(teamgoal, session)
 
 
-@router.get("/read-teampersons/{teamperson_id}")
+@router.get("/teamgoals/{teamgoals_id}")
 @version(1, 0)
-async def read_teamperson(teamperson_id: int, session: SessionDep = Depends(get_session), q: str = None):
+async def read_teamgoal(teamgoal_id: int, session: SessionDep = Depends(get_session), q: str = None):
     """Retrieve a teamgoal by its ID."""
-    return read_teamperson_service(teamperson_id, session)
+    return read_teamgoal_service(teamgoal_id, session)

@@ -7,7 +7,7 @@ from fastapi_versioning import VersionedFastAPI, version
 router = APIRouter()
 
 
-@router.post("/create-skill/")
+@router.post("/skills/")
 @version(1, 0)
 def create_skill(skill: Skill, session: SessionDep = Depends(get_session)):
     """Create a skill."""

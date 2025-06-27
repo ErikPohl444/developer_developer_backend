@@ -1,5 +1,5 @@
-from src.models.skill import Skill
-from src.services.skill_service import create_skill_service, read_skill_service
+from src.models.skilltool import SkillTool
+from src.services.skilltool_service import create_skilltool_service, read_skilltool_service
 from src.main import SessionDep, get_session
 from fastapi import APIRouter, Depends
 from fastapi_versioning import VersionedFastAPI, version
@@ -7,15 +7,15 @@ from fastapi_versioning import VersionedFastAPI, version
 router = APIRouter()
 
 
-@router.post("/create-skill/")
+@router.post("/skilltools/")
 @version(1, 0)
-def create_skill(skill: Skill, session: SessionDep = Depends(get_session)):
+def create_skilltool(skilltool: SkillTool, session: SessionDep = Depends(get_session)):
     """Create a skilltool."""
-    return create_skill_service(skill, session)
+    return create_skilltool_service(skilltool, session)
 
 
-@router.get("/skills/{skill_id}")
+@router.get("/skilltools/{skill_id}")
 @version(1, 0)
-async def read_skill(skill_id: int, session: SessionDep = Depends(get_session), q: str = None):
+async def read_skilltool(skilltool_id: int, session: SessionDep = Depends(get_session), q: str = None):
     """Retrieve a skilltool by its ID."""
-    return read_skill_service(skill_id, session)
+    return read_skilltool_service(skilltool_id, session)
