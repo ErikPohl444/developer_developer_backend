@@ -1,7 +1,7 @@
 from src.models.role import Role
 from src.services.role_service import create_role_service, read_role_service
-from src.main import SessionDep, get_session
-from generic_router_factory import create_crud_router
+from src.services.db_service import SessionDep
+from src.routers.generic_router_factory import create_crud_router
 
 
 router = create_crud_router(
@@ -10,5 +10,4 @@ router = create_crud_router(
     read_service=read_role_service,
     resource_name="roles",
     session_dep=SessionDep,
-    get_session_func=get_session,
 )
