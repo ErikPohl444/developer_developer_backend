@@ -1,21 +1,14 @@
 from src.models.user import User
 from src.services.user_service import create_user_service, read_user_service
 from src.main import SessionDep, get_session
-from fastapi import APIRouter, Depends
-from fastapi_versioning import VersionedFastAPI, version
-
-router = APIRouter()
+from generic_router_factory import create_crud_router
 
 
-@router.post("/users/")
-@version(1, 0)
-def create_user(user: User, session: SessionDep = Depends(get_session)):
-    """Create a user."""
-    return create_user_service(user, session)
-
-
-@router.get("/users/{user_id}")
-@version(1, 0)
-async def read_user(user_id: int, session: SessionDep = Depends(get_session), q: str = None):
-    """Retrieve a user by its ID."""
-    return read_user_service(user_id, session)
+router = create_crud_router(
+    model=User,
+    create_service=create_user_service,
+    read_service=read_user_service,
+    resource_name="users",
+    session_dep=SessionDep,
+    get_session_func=get_session,
+)
