@@ -1,4 +1,3 @@
-from fastapi import APIRouter, Depends
 from src.models.skill import Skill
 from src.services.skill_service import create_skill_service, read_skill_service
 from src.main import SessionDep, get_session

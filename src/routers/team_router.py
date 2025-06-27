@@ -1,4 +1,3 @@
-from fastapi import APIRouter, Depends
 from src.models.team import Team
 from src.services.team_service import create_team_service, read_team_service
 from src.main import SessionDep, get_session
