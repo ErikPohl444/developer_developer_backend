@@ -11,10 +11,12 @@ router = APIRouter()
 @router.post("/create-person/")
 @version(1, 0)
 def create_person(person: Person, session: SessionDep = Depends(get_session)):
+    """Create a person."""
     return create_person_service(person, session)
 
 
 @router.get("/persons/{person_id}")
 @version(1, 0)
 async def read_person(person_id: int, session: SessionDep = Depends(get_session), q: str = None):
+    """Retrieve a person by their ID."""
     return read_person_service(person_id, session)

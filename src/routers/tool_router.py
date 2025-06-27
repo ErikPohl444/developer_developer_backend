@@ -11,10 +11,12 @@ router = APIRouter()
 @router.post("/create-tool/")
 @version(1, 0)
 def create_tool(tool: Tool, session: SessionDep = Depends(get_session)):
+    """Create a tool."""
     return create_tool_service(tool, session)
 
 
 @router.get("/tools/{tool_id}")
 @version(1, 0)
 async def read_tool(tool_id: int, session: SessionDep = Depends(get_session), q: str = None):
+    """Retrieve a tool by its ID."""
     return read_tool_service(tool_id, session)

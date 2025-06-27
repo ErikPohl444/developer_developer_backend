@@ -11,10 +11,12 @@ router = APIRouter()
 @router.post("/create-personskillhistory/")
 @version(1, 0)
 def create_personskillhistory(personskillhistory: PersonSkillHistory, session: SessionDep = Depends(get_session)):
+    """Create a personskilhistory entry."""
     return create_personskillhistory_service(personskillhistory, session)
 
 
 @router.get("/personskillhistories/{personskillhistory_id}")
 @version(1, 0)
 async def read_personskillhistories(personskillhistory_id: int, session: SessionDep = Depends(get_session), q: str = None):
+    """Retrieve a personskilhistory by its ID."""
     return read_personskillhistory_service(personskillhistory_id, session)

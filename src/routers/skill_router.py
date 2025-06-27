@@ -11,10 +11,12 @@ router = APIRouter()
 @router.post("/create-skill/")
 @version(1, 0)
 def create_skill(skill: Skill, session: SessionDep = Depends(get_session)):
+    """Create a skill."""
     return create_skill_service(skill, session)
 
 
 @router.get("/skills/{skill_id}")
 @version(1, 0)
 async def read_skill(skill_id: int, session: SessionDep = Depends(get_session), q: str = None):
+    """Retrieve a skill by its ID."""
     return read_skill_service(skill_id, session)
