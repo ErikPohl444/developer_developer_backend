@@ -51,13 +51,16 @@ git clone https://github.com/ErikPohl444/Develop_backend.git
 cd Develop_backend
 pip install -r requirements.txt
 ```
+
+## Running with Docker
+
+```commandline
+docker build -t develop-backend .
+docker run -d -p 8000:8000 develop-backend
+```
+
 ---
 ## Running the tests
-Certainly! Here is a revised Testing section for your README.md that specifically instructs users to run the tests under the /tests folder:
-
----
-
-## Testing
 
 This project uses [pytest](https://pytest.readthedocs.io/) for testing.
 
