@@ -1,6 +1,7 @@
 from fastapi import HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session
 from src.models.role import Role
+from src.services.generic_return_all_items_service import read_all_items_service
 
 
 def create_role_service(role: Role, session: Session):
@@ -21,10 +22,4 @@ def read_role_service(role_id: int, session: Session):
 
 
 def read_all_roles_service(session: Session):
-    with session:
-        statement = select(Role)
-        roles = session.exec(statement)
-        if not roles:
-            raise HTTPException(status_code=404, detail="Roles not found")
-        all_roles = roles.all()
-    return all_roles
+    return read_all_items_service(session, Role)

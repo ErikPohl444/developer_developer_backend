@@ -1,6 +1,7 @@
 from fastapi import HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session
 from src.models.personskillhistory import PersonSkillHistory
+from src.services.generic_return_all_items_service import read_all_items_service
 
 
 def create_personskillhistory_service(personskillhistory: PersonSkillHistory, session: Session):
@@ -21,10 +22,4 @@ def read_personskillhistory_service(personskillhistory_id: int, session: Session
 
 
 def read_all_personskillhistories_service(session: Session):
-    with session:
-        statement = select(PersonSkillHistory)
-        personskillhistories = session.exec(statement)
-        if not personskillhistories:
-            raise HTTPException(status_code=404, detail="PersonSkillHistories not found")
-        all_personskillhistories = personskillhistories.all()
-    return all_personskillhistories
+    return read_all_items_service(session, PersonSkillHistory)

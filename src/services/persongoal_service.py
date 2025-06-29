@@ -1,6 +1,7 @@
 from fastapi import HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session
 from src.models.persongoal import PersonGoal
+from src.services.generic_return_all_items_service import read_all_items_service
 
 
 def create_persongoal_service(persongoal: PersonGoal, session: Session):
@@ -21,10 +22,4 @@ def read_persongoal_service(persongoal_id: int, session: Session):
 
 
 def read_all_persongoals_service(session: Session):
-    with session:
-        statement = select(PersonGoal)
-        persongoals = session.exec(statement)
-        if not persongoals:
-            raise HTTPException(status_code=404, detail="PersonSkills not found")
-        all_persongoals = persongoals.all()
-    return all_persongoals
+    return read_all_items_service(session, PersonGoal)

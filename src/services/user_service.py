@@ -1,6 +1,7 @@
 from fastapi import HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session
 from src.models.user import User
+from src.services.generic_return_all_items_service import read_all_items_service
 
 
 def create_user_service(user: User, session: Session):
@@ -21,10 +22,4 @@ def read_user_service(user_id: int, session: Session):
 
 
 def read_all_users_service(session: Session):
-    with session:
-        statement = select(User)
-        users = session.exec(statement)
-        if not users:
-            raise HTTPException(status_code=404, detail="Users not found")
-        all_users = users.all()
-    return all_users
+    return read_all_items_service(session, User)

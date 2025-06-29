@@ -1,6 +1,7 @@
 from fastapi import HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session
 from src.models.teamperson import TeamPerson
+from src.services.generic_return_all_items_service import read_all_items_service
 
 
 def create_teamperson_service(teamperson: TeamPerson, session: Session):
@@ -21,10 +22,4 @@ def read_teamperson_service(teamperson_id: int, session: Session):
 
 
 def read_all_teampersons_service(session: Session):
-    with session:
-        statement = select(TeamPerson)
-        teampersons = session.exec(statement)
-        if not teampersons:
-            raise HTTPException(status_code=404, detail="TeamPersons not found")
-        all_teampersons = teampersons.all()
-    return all_teampersons
+    return read_all_items_service(session, TeamPerson)

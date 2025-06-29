@@ -1,6 +1,7 @@
 from fastapi import HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session
 from src.models.person import Person
+from src.services.generic_return_all_items_service import read_all_items_service
 
 
 def create_person_service(person: Person, session: Session):
@@ -21,10 +22,4 @@ def read_person_service(person_id: int, session: Session):
 
 
 def read_all_persons_service(session: Session):
-    with session:
-        statement = select(PermissionError)
-        persons = session.exec(statement)
-        if not persons:
-            raise HTTPException(status_code=404, detail="PersonSkills not found")
-        all_persons = persons.all()
-    return all_persons
+    return read_all_items_service(session, Person)
