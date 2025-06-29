@@ -6,6 +6,7 @@ def create_crud_router(
     model,
     create_service,
     read_service,
+    read_all_service,
     resource_name: str,
     session_dep
 ):
@@ -25,5 +26,11 @@ def create_crud_router(
     async def read_resource(item_id: int, session: session_dep, q: str = None):
         """Retrieve a resource by its ID."""
         return read_service(item_id, session)
+
+    @router.get(f"/{resource_name}/")
+    @version(1, 0)
+    async def read_resource(session: session_dep, q: str = None):
+        """Retrieve all resource."""
+        return read_all_service(session)
 
     return router
