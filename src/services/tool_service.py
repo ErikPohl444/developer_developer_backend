@@ -1,6 +1,7 @@
 from fastapi import HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session
 from src.models.tool import Tool
+from src.services.generic_return_all_items_service import read_all_items_service
 
 
 def create_tool_service(tool: Tool, session: Session):
@@ -21,10 +22,4 @@ def read_tool_service(tool_id: int, session: Session):
 
 
 def read_all_tools_service(session: Session):
-    with session:
-        statement = select(Tool)
-        tools = session.exec(statement)
-        if not tools:
-            raise HTTPException(status_code=404, detail="Tools not found")
-        all_tools = tools.all()
-    return all_tools
+    return read_all_items_service(session, Tool)
