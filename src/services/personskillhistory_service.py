@@ -2,16 +2,11 @@ from fastapi import HTTPException
 from sqlmodel import Session
 from src.models.personskillhistory import PersonSkillHistory
 from src.services.generic_return_all_items_service import read_all_items_service
+from src.services.generic_create_item_service import create_item_service
 
 
 def create_personskillhistory_service(personskillhistory: PersonSkillHistory, session: Session):
-    session.add(personskillhistory)
-    session.commit()
-    session.refresh(personskillhistory)
-    return {
-        "message": f"PersonSkillHistory {personskillhistory.name} created successfully!",
-        "data": personskillhistory
-    }
+    return create_item_service(session, personskillhistory)
 
 
 def read_personskillhistory_service(personskillhistory_id: int, session: Session):

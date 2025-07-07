@@ -2,16 +2,11 @@ from fastapi import HTTPException
 from sqlmodel import Session
 from src.models.skill import Skill
 from src.services.generic_return_all_items_service import read_all_items_service
+from src.services.generic_create_item_service import create_item_service
 
 
 def create_skill_service(skill: Skill, session: Session):
-    session.add(skill)
-    session.commit()
-    session.refresh(skill)
-    return {
-        "message": f"Skill {skill.name} created successfully!",
-        "data": skill
-    }
+    return create_item_service(session, skill)
 
 
 def read_skill_service(skill_id: int, session: Session):
