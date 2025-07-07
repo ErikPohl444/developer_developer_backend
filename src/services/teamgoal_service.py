@@ -2,16 +2,11 @@ from fastapi import HTTPException
 from sqlmodel import Session
 from src.models.teamgoal import TeamGoal
 from src.services.generic_return_all_items_service import read_all_items_service
+from src.services.generic_create_item_service import create_item_service
 
 
 def create_teamgoal_service(teamgoal: TeamGoal, session: Session):
-    session.add(teamgoal)
-    session.commit()
-    session.refresh(teamgoal)
-    return {
-        "message": f"TeamGoal {teamgoal.name} created successfully!",
-        "data": teamgoal
-    }
+    return create_item_service(session, teamgoal)
 
 
 def read_teamgoal_service(teamgoal_id: int, session: Session):

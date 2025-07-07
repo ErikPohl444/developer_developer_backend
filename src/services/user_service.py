@@ -2,16 +2,11 @@ from fastapi import HTTPException
 from sqlmodel import Session
 from src.models.user import User
 from src.services.generic_return_all_items_service import read_all_items_service
+from src.services.generic_create_item_service import create_item_service
 
 
 def create_user_service(user: User, session: Session):
-    session.add(user)
-    session.commit()
-    session.refresh(user)
-    return {
-        "message": f"User {user.name} created successfully!",
-        "data": user
-    }
+    return create_item_service(session, user)
 
 
 def read_user_service(user_id: int, session: Session):
