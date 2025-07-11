@@ -1,8 +1,8 @@
-from fastapi import HTTPException
 from sqlmodel import Session
 from src.models.skill import Skill
 from src.services.generic_return_all_items_service import read_all_items_service
 from src.services.generic_create_item_service import create_item_service
+from src.services.generic_return_one_item_service import return_one_item_service
 
 
 def create_skill_service(skill: Skill, session: Session):
@@ -10,10 +10,7 @@ def create_skill_service(skill: Skill, session: Session):
 
 
 def read_skill_service(skill_id: int, session: Session):
-    skill = session.get(Skill, skill_id)
-    if not skill:
-        raise HTTPException(status_code=404, detail="Skill not found")
-    return skill
+    return return_one_item_service(Skill, skill_id, session)
 
 
 def read_all_skills_service(session: Session):
